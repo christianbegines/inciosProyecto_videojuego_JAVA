@@ -8,6 +8,8 @@ package stormrage;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -21,6 +23,7 @@ public class Stormrage extends Canvas implements Runnable{
     private static final int ALTO=600;
     private static final String nombre="Stormrage";
     private static Thread thread;
+    private static volatile boolean enFuncionamiento=false;
     
     Stormrage(){
         setPreferredSize(new Dimension(ANCHO,ALTO));
@@ -38,13 +41,24 @@ public class Stormrage extends Canvas implements Runnable{
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
+        while(enFuncionamiento){
+            
+        }
+    }
+    private synchronized void detener(){
+       enFuncionamiento=false;
+        try {
+            thread.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Stormrage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void iniciar(){
+        enFuncionamiento=true;
+        thread = new Thread(this,"Graficos");
+        thread.start();
+    }
     
-    }
-    private void detener(){
-       
-    }
-    private void iniciar(){
-        thread = new Thread();
-    }
+    
 }
