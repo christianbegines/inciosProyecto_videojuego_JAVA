@@ -42,9 +42,9 @@ public class Stormrage extends Canvas implements Runnable{
     
     }
     private void detener(){
-        
+       
     }
     private void iniciar(){
-        
+        thread = new Thread();
     }
 }
