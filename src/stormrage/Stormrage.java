@@ -6,9 +6,14 @@
 package stormrage;
 
 import control.Teclado;
+import graficos.Pantalla;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -29,9 +34,17 @@ public class Stormrage extends Canvas implements Runnable{
     private static volatile boolean enFuncionamiento=false;
     private static Teclado teclado;
     
-    Stormrage(){
+    private static int x=0;
+    private static int y=0;
+    
+    private static Pantalla pantalla;
+    
+    private static BufferedImage imagen= new BufferedImage(ANCHO,ALTO,BufferedImage.TYPE_INT_RGB);
+    private static int[]pixeles=((DataBufferInt)imagen.getRaster().getDataBuffer()).getData();
+    
+    public Stormrage(){
         setPreferredSize(new Dimension(ANCHO,ALTO));
-        
+        pantalla=new Pantalla(ANCHO,ALTO);
         teclado= new Teclado();
         this.addKeyListener(teclado);
         ventanaP= new JFrame(NOMBRE);
@@ -94,22 +107,39 @@ public class Stormrage extends Canvas implements Runnable{
         teclado.actualizar();
         
         if(teclado.arriba){
-            System.out.println("Arriba");
+            y++;
         }
         if(teclado.abajo){
-            System.out.println("abajo");
+            y--;
         }
         if(teclado.izquierda){
-            System.out.println("izquierda");
+            x++;
         }
         if(teclado.derecha){
-            System.out.println("derecha");
+           x--;
         }
         
         aps++;
     }
     
     private void mostrar(){
+        BufferStrategy estrategia=getBufferStrategy();
+        
+        if(estrategia==null){
+            createBufferStrategy(3);
+            return;
+        }
+        pantalla.limpiar();
+        pantalla.mostrar(x, y);
+        System.arraycopy(pantalla.pixeles, 0, pixeles, 0, pixeles.length);
+//        for (int i = 0; i < pixeles.length; i++) {
+//            pixeles[i]=pantalla.pixeles[i];
+//        }
+
+        Graphics g= estrategia.getDrawGraphics();
+        g.drawImage(imagen, 0, 0, getWidth(),getHeight(),null);
+        g.dispose();
+        estrategia.show();
         fps++;
     }
     
