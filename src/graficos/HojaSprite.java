@@ -16,17 +16,17 @@ import javax.imageio.ImageIO;
  * @author chavo
  */
 public class HojaSprite {
-    public final int[] pixeles;
-    private final int alto;
-    private final int ancho;
+    public final int[] PIXELES;
+    private final int ALTO;
+    private final int ANCHO;
     
     public HojaSprite(final String ruta,final int ancho,final int alto){
-        this.alto=alto;
-        this.ancho=ancho;
-        pixeles=new int[ancho*alto];
+        this.ALTO=alto;
+        this.ANCHO=ancho;
+        PIXELES=new int[ancho*alto];
         try {
             BufferedImage imagen= ImageIO.read(HojaSprite.class.getResource(ruta));
-            imagen.getRGB(0, 0,ancho,alto,pixeles,0,ancho);
+            imagen.getRGB(0, 0,ancho,alto,PIXELES,0,ancho);
         } catch (IOException ex) {
             Logger.getLogger(HojaSprite.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -34,7 +34,7 @@ public class HojaSprite {
     }
 
     public int getAncho() {
-        return ancho;
+        return ANCHO;
     }
     
     

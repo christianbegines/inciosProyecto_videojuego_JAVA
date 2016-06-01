@@ -5,6 +5,7 @@
  */
 package stormrage;
 
+import control.Teclado;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -26,11 +27,13 @@ public class Stormrage extends Canvas implements Runnable{
     private static int fps=0;
     private static Thread thread;
     private static volatile boolean enFuncionamiento=false;
+    private static Teclado teclado;
     
     Stormrage(){
         setPreferredSize(new Dimension(ANCHO,ALTO));
         
-        
+        teclado= new Teclado();
+        this.addKeyListener(teclado);
         ventanaP= new JFrame(NOMBRE);
         ventanaP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaP.setResizable(false);
@@ -51,7 +54,11 @@ public class Stormrage extends Canvas implements Runnable{
         long referenciaContador=System.nanoTime();
         double tiempoTranscurrido;
         double delta=0;
+        
+        requestFocus();
+        
         while(enFuncionamiento){
+            
             final long inicioBucle=System.nanoTime();
             tiempoTranscurrido=inicioBucle-referenciaActualizacion;
             referenciaActualizacion=inicioBucle;
@@ -84,6 +91,21 @@ public class Stormrage extends Canvas implements Runnable{
     }
     
     private void actualizar(){
+        teclado.actualizar();
+        
+        if(teclado.arriba){
+            System.out.println("Arriba");
+        }
+        if(teclado.abajo){
+            System.out.println("abajo");
+        }
+        if(teclado.izquierda){
+            System.out.println("izquierda");
+        }
+        if(teclado.derecha){
+            System.out.println("derecha");
+        }
+        
         aps++;
     }
     
