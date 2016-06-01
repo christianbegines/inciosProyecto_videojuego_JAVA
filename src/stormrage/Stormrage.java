@@ -21,7 +21,9 @@ public class Stormrage extends Canvas implements Runnable{
     private static JFrame ventanaP;
     private static final int ANCHO=800;
     private static final int ALTO=600;
-    private static final String nombre="Stormrage";
+    private static final String NOMBRE="Stormrage";
+    private static int aps=0;
+    private static int fps=0;
     private static Thread thread;
     private static volatile boolean enFuncionamiento=false;
     
@@ -29,7 +31,7 @@ public class Stormrage extends Canvas implements Runnable{
         setPreferredSize(new Dimension(ANCHO,ALTO));
         
         
-        ventanaP= new JFrame(nombre);
+        ventanaP= new JFrame(NOMBRE);
         ventanaP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaP.setResizable(false);
         ventanaP.setLayout(new BorderLayout());
@@ -42,8 +44,29 @@ public class Stormrage extends Canvas implements Runnable{
 
     @Override
     public synchronized void run() {
+        final int NS_POR_SEGUNDO=1000000000;
+        final byte APS_OBJETIVO=60;
+        final double NS_POR_ACTUALIZACION=NS_POR_SEGUNDO/APS_OBJETIVO;
+        long referenciaActualizacion=System.nanoTime();
+        long referenciaContador=System.nanoTime();
+        double tiempoTranscurrido;
+        double delta=0;
         while(enFuncionamiento){
-            
+            final long inicioBucle=System.nanoTime();
+            tiempoTranscurrido=inicioBucle-referenciaActualizacion;
+            referenciaActualizacion=inicioBucle;
+            delta+=tiempoTranscurrido/NS_POR_ACTUALIZACION;
+            while(delta>=1){
+                actualizar();
+                delta--;
+            }
+            mostrar();
+            if(System.nanoTime()- referenciaContador>NS_POR_SEGUNDO){
+              ventanaP.setTitle(NOMBRE+"|| APS: "+aps+"||FPS: "+fps);
+              aps=0;
+              fps=0;
+              referenciaContador= System.nanoTime();
+            }
         }
     }
     private synchronized void detener(){
@@ -58,6 +81,14 @@ public class Stormrage extends Canvas implements Runnable{
         enFuncionamiento=true;
         thread = new Thread(this,"Graficos");
         thread.start();
+    }
+    
+    private void actualizar(){
+        aps++;
+    }
+    
+    private void mostrar(){
+        fps++;
     }
     
     
