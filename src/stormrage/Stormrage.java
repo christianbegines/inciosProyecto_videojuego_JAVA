@@ -77,11 +77,11 @@ public class Stormrage extends Canvas implements Runnable{
         ventanaP.setResizable(false);
         ventanaP.setLayout(new BorderLayout());
         ventanaP.add(this,BorderLayout.CENTER);
-        
         ventanaP.setUndecorated(true);
+        ventanaP.pack();   
         ventanaP.setLocationRelativeTo(null);
         ventanaP.setVisible(true);
-        ventanaP.pack();
+        
     }
     /**
      * Realiza lo contenido cuanddo el thread
@@ -111,7 +111,8 @@ public class Stormrage extends Canvas implements Runnable{
             mostrar();
             //esto muestra las APS y los FPS
             if(System.nanoTime()- referenciaContador>NS_POR_SEGUNDO){
-              ventanaP.setTitle(NOMBRE+"|| APS: "+aps+"||FPS: "+fps);
+              contador_APS="APS:"+aps;
+              contador_FPS="FPS:"+fps;
               aps=0;
               fps=0;
               referenciaContador= System.nanoTime();
@@ -160,7 +161,12 @@ public class Stormrage extends Canvas implements Runnable{
         }
         aps++;
     }
-    
+    /**
+     * Se encarga de mostrar toda la 
+     * parte grafica, cargar los cuadros,rellenar la pantalla
+     * Todo lo que tenga que ver con pintar
+     * 
+     */
     private void mostrar(){
         BufferStrategy estrategia=getBufferStrategy();
         
@@ -175,12 +181,13 @@ public class Stormrage extends Canvas implements Runnable{
 //        for (int i = 0; i < pixeles.length; i++) {
 //            pixeles[i]=pantalla.pixeles[i];
 //        }
-
+        
         Graphics g= estrategia.getDrawGraphics();
         g.drawImage(imagen, 0, 0, getWidth(),getHeight(),null);
         g.setColor(Color.white);
         g.fillRect(ANCHO/2, ALTO/2, 32, 32);
         g.drawString(contador_APS, 10, 20);
+        g.drawString(contador_FPS,10,30);
         g.dispose();
         estrategia.show();
         fps++;

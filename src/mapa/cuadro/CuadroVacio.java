@@ -9,7 +9,7 @@ import graficos.Pantalla;
 import graficos.Sprite;
 
 /**
- *
+ *  Cuadro vacio / en negro.
  * @author chavo
  */
 public class CuadroVacio extends Cuadro {

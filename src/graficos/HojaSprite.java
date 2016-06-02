@@ -44,7 +44,10 @@ public class HojaSprite {
         }
         
     }
-
+    /**
+     * Consulta el ancho de la hoja
+     * @return ancho de la hoja
+     */
     public int getAncho() {
         return ANCHO;
     }

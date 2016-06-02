@@ -9,8 +9,8 @@ import graficos.Pantalla;
 import graficos.Sprite;
 
 /**
- *
- * @author chavo
+ * Cuadro de desierto
+ * @author Christian Begines
  */
 public class CuadroDesierto extends Cuadro{
     

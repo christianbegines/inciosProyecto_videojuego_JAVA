@@ -22,10 +22,16 @@ public class Pantalla {
     private int diferenciaY;
 
     //temporal
-//    private final static int LADO_SPRITE = 32;
-//    private final static int MASCARA_SPRITE = LADO_SPRITE - 1;
+    // private final static int LADO_SPRITE = 32;
+    //private final static int MASCARA_SPRITE = LADO_SPRITE - 1;
 
     //fin temporal
+    /**
+     * Pantalla a partir de un ancho y un alto, que se 
+     * encargara de dibujar los cuadros
+     * @param ancho Ancho de la pantalla
+     * @param alto  Alto de la pantalla
+     */
     public Pantalla(final int ancho, final int alto) {
         this.ALTO = alto;
         this.ANCHO = ancho;
@@ -89,14 +95,27 @@ public class Pantalla {
             }
         }
     }
+    /**
+     * Genera la diferencia del movimiento del personaje
+     * con la pantalla
+     * @param diferenciaX
+     * @param diferenciaY 
+     */
     public void establecerDiferencia(final int diferenciaX,final int diferenciaY){
         this.diferenciaX=diferenciaX;
         this.diferenciaY=diferenciaY;
     }
+    /**
+     * Consulta el ancho de la pantalla
+     * @return  valor del ancho de la pantalla
+     */
     public int getANCHO() {
         return ANCHO;
     }
-
+    /**
+     * Consulta el alto de la pantalla
+     * @return valor del alto de la pantalla
+     */
     public int getALTO() {
         return ALTO;
     }
