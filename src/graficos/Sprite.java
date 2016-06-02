@@ -18,7 +18,7 @@ public class Sprite {
     private final HojaSprite HOJA;
     
     //coleccion de sprites
-    public static Sprite asfalto= new Sprite(32,0,0,HojaSprite.desierto);
+    public static Sprite DESIERTO= new Sprite(32,0,0,HojaSprite.desierto);
     //fin coleccion.
     public Sprite(final int lado,final int columna, final int fila, 
             final HojaSprite hoja){
@@ -35,6 +35,12 @@ public class Sprite {
             }
             
         }
+        
+        
+    }
+
+    public int getLADO() {
+        return LADO;
     }
     
 }
