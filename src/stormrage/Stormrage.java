@@ -9,6 +9,7 @@ import control.Teclado;
 import graficos.Pantalla;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -80,16 +81,17 @@ public class Stormrage extends Canvas implements Runnable{
      */
     @Override
     public  void run() {
-        final int NS_POR_SEGUNDO=1000000000;
-        final byte APS_OBJETIVO=60;
+        final int NS_POR_SEGUNDO=1000000000;//nanosegundos por segundos
+        final byte APS_OBJETIVO=60;//actualizaciones por segundo
         final double NS_POR_ACTUALIZACION=NS_POR_SEGUNDO/APS_OBJETIVO;
+        //referencias
         long referenciaActualizacion=System.nanoTime();
         long referenciaContador=System.nanoTime();
+        //fin referencias
         double tiempoTranscurrido;
         double delta=0;        
         requestFocus();
-        while(enFuncionamiento){
-            
+        while(enFuncionamiento){  
             final long inicioBucle=System.nanoTime();
             tiempoTranscurrido=inicioBucle-referenciaActualizacion;
             referenciaActualizacion=inicioBucle;
@@ -99,6 +101,7 @@ public class Stormrage extends Canvas implements Runnable{
                 delta--;
             }
             mostrar();
+            //esto muestra las APS y los FPS
             if(System.nanoTime()- referenciaContador>NS_POR_SEGUNDO){
               ventanaP.setTitle(NOMBRE+"|| APS: "+aps+"||FPS: "+fps);
               aps=0;
@@ -126,7 +129,10 @@ public class Stormrage extends Canvas implements Runnable{
         thread = new Thread(this,"Graficos");
         thread.start();
     }
-    
+    /**
+     * Actualiza los valores de las teclas y 
+     * los parametros x e y
+     */
     private void actualizar(){
         teclado.actualizar();   
         if(teclado.arriba){
@@ -161,6 +167,8 @@ public class Stormrage extends Canvas implements Runnable{
 
         Graphics g= estrategia.getDrawGraphics();
         g.drawImage(imagen, 0, 0, getWidth(),getHeight(),null);
+        g.setColor(Color.white);
+        g.fillRect(ANCHO/2, ALTO/2, 32, 32);
         g.dispose();
         estrategia.show();
         fps++;

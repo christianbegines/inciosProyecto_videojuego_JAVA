@@ -8,8 +8,9 @@ package graficos;
 import mapa.cuadro.Cuadro;
 
 /**
- *
- * @author chavo
+ * Ensambla todos los objetos, que
+ * deban ser actualizados o separados
+ * @author Christian begines
  */
 public class Pantalla {
 
@@ -31,7 +32,9 @@ public class Pantalla {
         pixeles = new int[ancho * alto];
 
     }
-
+    /**
+     * Limpia la pantalla para poder repintarla
+     */
     public void limpiar() {
         for (int i = 0; i < pixeles.length; i++) {
             pixeles[i] = 0;
@@ -68,7 +71,7 @@ public class Pantalla {
                         || posicionY < 0 || posicionY > this.ALTO) {
                     break;
                 }
-                pixeles[posicionX + posicionY * this.ANCHO] 
+                pixeles[posicionX + posicionY *ANCHO] 
                         = cuadro.sprite.pixeles[x + y * cuadro.sprite.getLADO()];
             }
         }

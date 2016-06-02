@@ -12,19 +12,26 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- *
- * @author chavo
+ *Representa la Hoja de sprites 
+ * @author christian begines
  */
 public class HojaSprite {
+    
     public final int[] PIXELES;
     private final int ALTO;
     private final int ANCHO;
+   
     //coleccion de hojas sprite
     public static HojaSprite desierto= new HojaSprite(
             "/texturas/desierto.png",320,320);
 
     //fin coleccion
-    
+    /**
+     * Hoja sprite 
+     * @param ruta ruta de la hoja
+     * @param ancho ancho de la hoja
+     * @param alto alto de la hoja
+     */
     public HojaSprite(final String ruta,final int ancho,final int alto){
         this.ALTO=alto;
         this.ANCHO=ancho;

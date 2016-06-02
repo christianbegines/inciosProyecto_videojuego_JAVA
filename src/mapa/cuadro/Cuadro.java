@@ -9,17 +9,16 @@ import graficos.Pantalla;
 import graficos.Sprite;
 
 /**
- *
+ *Representa cada cuadrado de 32*32 en el mapa
  * @author chavo
  */
 public abstract class Cuadro {
    
     
     //coleccion de cuadros
-    
     public static final Cuadro Desierto=new CuadroDesierto(Sprite.desierto);
-    public static final Cuadro VACIO=new CuadroVacio(Sprite.vacio);
-//coleccion de cuadros;
+    public static final Cuadro vacio=new CuadroVacio(Sprite.vacio);
+   //coleccion de cuadros;
     
     
     
@@ -34,7 +33,11 @@ public abstract class Cuadro {
    public void mostrar(int x,int y,Pantalla pantalla){
        pantalla.mostrarCuadro(x << 5, y << 5,this);
    }
-   
+   /**
+    * Comprueba si el cuadro es un 
+    * solido o no lo es
+    * @return false si no es un solido
+    */
    public boolean solido(){
        return false;
    }

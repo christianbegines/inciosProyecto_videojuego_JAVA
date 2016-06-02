@@ -19,8 +19,10 @@ public class Sprite {
     
     //coleccion de sprites
     public static Sprite desierto= new Sprite(32,0,0,HojaSprite.desierto);
-    public static Sprite vacio=new Sprite(32,0);
+    public static Sprite vacio=new Sprite(32,0x000000);
     //fin coleccion.
+    
+    
     public Sprite(final int lado,final int columna, final int fila, 
             final HojaSprite hoja){
         this.HOJA=hoja;
@@ -28,6 +30,7 @@ public class Sprite {
         pixeles= new int[lado*lado];
         this.x=columna*lado;
         this.y=fila*lado;
+        //recorre la hoja de sprite
         for (int y = 0; y < lado; y++) {
             for (int x = 0; x < lado; x++){
                 pixeles[x+y*lado]=hoja.PIXELES[(x+this.x)+(y+this.y)*hoja.getAncho()];

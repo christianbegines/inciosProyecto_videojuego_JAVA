@@ -24,6 +24,7 @@ public abstract class Mapa {
         this.alto=alto;
         this.ancho=ancho;
         cuadros=new int[ancho*alto];
+        generarMapa();
     }
     public Mapa(String ruta){
         cargarMapa(ruta);
@@ -42,7 +43,7 @@ public abstract class Mapa {
         pantalla.establecerDiferencia(compensacionX, compensacionY);
         
         int oeste=compensacionX >> 5;
-        int este=(compensacionX+pantalla.getANCHO() )>> 5;
+        int este=(compensacionX+pantalla.getANCHO()) >> 5;
         int norte=compensacionY >> 5;
         int sud=(compensacionY+pantalla.getALTO()) >> 5;
         for (int y = 0; y < sud; y++) {
@@ -61,15 +62,14 @@ public abstract class Mapa {
      * @return 
      */
     public Cuadro obtenerCuadro(int x, int y){
-       Cuadro cuadro=Cuadro.VACIO;
+       Cuadro cuadro=Cuadro.vacio;
        if(x<0 || y<0 || x>=ancho || y>=alto){
-           cuadro=Cuadro.VACIO;
+           cuadro=Cuadro.vacio;
        }
        switch(cuadros[x+y*ancho]){
-           case 0:{
-               cuadro=Cuadro.Desierto;
-             
-           }break;
+           case 0:
+               cuadro=Cuadro.Desierto;   
+           break;
            case 1:
                break;
            case 2:
