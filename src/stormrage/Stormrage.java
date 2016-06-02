@@ -17,38 +17,54 @@ import java.awt.image.DataBufferInt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import mapa.Mapa;
+import mapa.MapaGenerado;
 
 /**
- *
- * @author chavo
+ *Clase principal que implementa los hilos,
+ * e extende de Canvas.Es la que se encarga de ejecutar todo mayormente
+ * @author Christian Begines
  */
 public class Stormrage extends Canvas implements Runnable{
-    
-    public static final long SERIALVERSIONUID=1L;
-    private static JFrame ventanaP;
+    //atributos de la clase
+    public static final long SERIALVERSIONUID=1L; 
+    //Ancho y alto de la ventana
     private static final int ANCHO=800;
     private static final int ALTO=600;
+    //Nombre de la ventana
     private static final String NOMBRE="Stormrage";
     private static int aps=0;
-    private static int fps=0;
-    private static Thread thread;
+    private static int fps=0;   
     private static volatile boolean enFuncionamiento=false;
+    
+    private static Thread thread;//primer hilo
     private static Teclado teclado;
+    private static JFrame ventanaP;
+    private static Pantalla pantalla;//generador de la pantalla
+    private static Mapa mapa;
     
     private static int x=0;
     private static int y=0;
     
-    private static Pantalla pantalla;
+    
     
     private static BufferedImage imagen= new BufferedImage(ANCHO,ALTO,BufferedImage.TYPE_INT_RGB);
     private static int[]pixeles=((DataBufferInt)imagen.getRaster().getDataBuffer()).getData();
     
     public Stormrage(){
+        
+        //inicializacion de atributos graficos
         setPreferredSize(new Dimension(ANCHO,ALTO));
+        ventanaP= new JFrame(NOMBRE);
         pantalla=new Pantalla(ANCHO,ALTO);
         teclado= new Teclado();
+        mapa= new MapaGenerado(128,128);
+        
+       
+        //evento del teclado
         this.addKeyListener(teclado);
-        ventanaP= new JFrame(NOMBRE);
+        
+        //configuracion de la ventana
         ventanaP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaP.setResizable(false);
         ventanaP.setLayout(new BorderLayout());
@@ -56,21 +72,22 @@ public class Stormrage extends Canvas implements Runnable{
         ventanaP.pack();
         ventanaP.setLocationRelativeTo(null);
         ventanaP.setVisible(true);
-        
+       
     }
-
+    /**
+     * Realiza lo contenido cuanddo el thread
+     * es iniciado.
+     */
     @Override
-    public synchronized void run() {
+    public  void run() {
         final int NS_POR_SEGUNDO=1000000000;
         final byte APS_OBJETIVO=60;
         final double NS_POR_ACTUALIZACION=NS_POR_SEGUNDO/APS_OBJETIVO;
         long referenciaActualizacion=System.nanoTime();
         long referenciaContador=System.nanoTime();
         double tiempoTranscurrido;
-        double delta=0;
-        
+        double delta=0;        
         requestFocus();
-        
         while(enFuncionamiento){
             
             final long inicioBucle=System.nanoTime();
@@ -90,6 +107,9 @@ public class Stormrage extends Canvas implements Runnable{
             }
         }
     }
+    /**
+     * detiene el thread .
+     */
     private synchronized void detener(){
        enFuncionamiento=false;
         try {
@@ -98,28 +118,29 @@ public class Stormrage extends Canvas implements Runnable{
             Logger.getLogger(Stormrage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void iniciar(){
+    /**
+     * Inicia el thread con el nombre Graficos
+     */
+    public synchronized void iniciar(){
         enFuncionamiento=true;
         thread = new Thread(this,"Graficos");
         thread.start();
     }
     
     private void actualizar(){
-        teclado.actualizar();
-        
+        teclado.actualizar();   
         if(teclado.arriba){
-            y++;
-        }
-        if(teclado.abajo){
             y--;
         }
+        if(teclado.abajo){
+            y++;
+        }
         if(teclado.izquierda){
-            x++;
+            x--;
         }
         if(teclado.derecha){
-           x--;
-        }
-        
+           x++;
+        }       
         aps++;
     }
     
@@ -131,7 +152,8 @@ public class Stormrage extends Canvas implements Runnable{
             return;
         }
         pantalla.limpiar();
-        pantalla.mostrar(x, y);
+        mapa.mostrar(x, y, pantalla);
+        
         System.arraycopy(pantalla.pixeles, 0, pixeles, 0, pixeles.length);
 //        for (int i = 0; i < pixeles.length; i++) {
 //            pixeles[i]=pantalla.pixeles[i];

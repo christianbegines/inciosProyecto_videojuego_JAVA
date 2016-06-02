@@ -17,10 +17,12 @@ public class Pantalla {
     private final int ALTO;
 
     public final int[] pixeles;
+    private int diferenciaX;
+    private int diferenciaY;
 
     //temporal
-    private final static int LADO_SPRITE = 32;
-    private final static int MASCARA_SPRITE = LADO_SPRITE - 1;
+//    private final static int LADO_SPRITE = 32;
+//    private final static int MASCARA_SPRITE = LADO_SPRITE - 1;
 
     //fin temporal
     public Pantalla(final int ancho, final int alto) {
@@ -35,27 +37,29 @@ public class Pantalla {
             pixeles[i] = 0;
         }
     }
-
-    public void mostrar(final int compensacionX, final int compensacionY) {
-        for (int y = 0; y < ALTO; y++) {
-            int posicionY = y + compensacionY;
-            if (posicionY < 0 || posicionY >= ALTO) {
-                continue;
-            }
-            for (int x = 0; x < ANCHO; x++) {
-                int posicionX = x + compensacionX;
-                if (posicionX < 0 || posicionX >= ANCHO) {
-                    continue;
-                }
-                //temporal
-                pixeles[posicionX + posicionY * ANCHO] = Sprite.desierto.pixeles[(x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
-
-            }
-        }
-    }
+ //temporal
+//    public void mostrar(final int compensacionX, final int compensacionY) {
+//        for (int y = 0; y < ALTO; y++) {
+//            int posicionY = y + compensacionY;
+//            if (posicionY < 0 || posicionY >= ALTO) {
+//                continue;
+//            }
+//            for (int x = 0; x < ANCHO; x++) {
+//                int posicionX = x + compensacionX;
+//                if (posicionX < 0 || posicionX >= ANCHO) {
+//                    continue;
+//                }
+//               
+//                pixeles[posicionX + posicionY * ANCHO] = Sprite.desierto.pixeles[(x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
+//
+//            }
+//        }
+//    }
     // fin temporal
 
     public void mostrarCuadro(int compensacionX, int compensacionY, Cuadro cuadro) {
+        compensacionX-=diferenciaX;
+        compensacionY-=diferenciaY;
         for (int y = 0; y < cuadro.sprite.getLADO(); y++) {
             int posicionY = y + compensacionY;
             for (int x = 0; x < cuadro.sprite.getLADO(); x++) {
@@ -69,7 +73,10 @@ public class Pantalla {
             }
         }
     }
-
+    public void establecerDiferencia(final int diferenciaX,final int diferenciaY){
+        this.diferenciaX=diferenciaX;
+        this.diferenciaY=diferenciaY;
+    }
     public int getANCHO() {
         return ANCHO;
     }

@@ -12,7 +12,9 @@ import java.util.Random;
  * @author chavo
  */
 public class MapaGenerado extends Mapa {
-    Random random= new Random();
+    
+    private static final Random random= new Random();
+    
     public MapaGenerado(int ancho, int alto) {
         super(ancho, alto);
     }

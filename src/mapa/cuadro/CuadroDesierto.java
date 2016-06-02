@@ -18,10 +18,7 @@ public class CuadroDesierto extends Cuadro{
         super(sprite);
     }
     
-    @Override
-    public void mostrar(int x, int y, Pantalla pantalla){
-        pantalla.mostrarCuadro(x, y, this);
-    }
+   
     
   
             
