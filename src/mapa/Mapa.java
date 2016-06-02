@@ -6,6 +6,8 @@
 package mapa;
 
 import graficos.Pantalla;
+import graficos.Sprite;
+import mapa.cuadro.Cuadro;
 
 /**
  *
@@ -37,6 +39,22 @@ public abstract class Mapa {
         
     }
     public void mostrar(int compensacionX,int compensacionY,Pantalla pantalla){
-        
+        int oeste=compensacionX >> 5;
+        int este=(compensacionX+pantalla.getANCHO() )>> 5;
+        int norte=compensacionY >> 5;
+        int sur=(compensacionY+pantalla.getALTO()) >> 5;
+    }
+    
+    public Cuadro obtenerCuadro(int x, int y){
+       Cuadro cuadro=null;
+       switch(cuadros[x+y*ancho]){
+           case 0:{
+               cuadro=Cuadro.Desierto;
+             
+           }break;
+           default:cuadros=null;
+       } 
+        return cuadro;
+       
     }
 }   

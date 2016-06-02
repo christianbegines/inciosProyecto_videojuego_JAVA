@@ -17,8 +17,9 @@ public abstract class Cuadro {
     
     //coleccion de cuadros
     
-    public static final Cuadro Desierto=new CuadroDesierto(Sprite.DESIERTO);
-    //coleccion de cuadros;
+    public static final Cuadro Desierto=new CuadroDesierto(Sprite.desierto);
+    public static final Cuadro VACIO=new CuadroVacio(Sprite.vacio);
+//coleccion de cuadros;
     
     
     

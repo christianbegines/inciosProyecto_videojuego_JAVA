@@ -24,6 +24,7 @@ import javax.swing.JFrame;
  */
 public class Stormrage extends Canvas implements Runnable{
     
+    public static final long SERIALVERSIONUID=1L;
     private static JFrame ventanaP;
     private static final int ANCHO=800;
     private static final int ALTO=600;

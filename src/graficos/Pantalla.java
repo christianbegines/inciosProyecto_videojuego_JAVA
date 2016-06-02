@@ -48,7 +48,7 @@ public class Pantalla {
                     continue;
                 }
                 //temporal
-                pixeles[posicionX + posicionY * ANCHO] = Sprite.DESIERTO.pixeles[(x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
+                pixeles[posicionX + posicionY * ANCHO] = Sprite.desierto.pixeles[(x & MASCARA_SPRITE) + (y & MASCARA_SPRITE) * LADO_SPRITE];
 
             }
         }
@@ -69,4 +69,13 @@ public class Pantalla {
             }
         }
     }
+
+    public int getANCHO() {
+        return ANCHO;
+    }
+
+    public int getALTO() {
+        return ALTO;
+    }
+    
 }

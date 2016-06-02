@@ -15,10 +15,11 @@ public class Sprite {
     private int x;
     private int y;
     public int[]pixeles;
-    private final HojaSprite HOJA;
+    private  HojaSprite HOJA;
     
     //coleccion de sprites
-    public static Sprite DESIERTO= new Sprite(32,0,0,HojaSprite.desierto);
+    public static Sprite desierto= new Sprite(32,0,0,HojaSprite.desierto);
+    public static Sprite vacio=new Sprite(32,0);
     //fin coleccion.
     public Sprite(final int lado,final int columna, final int fila, 
             final HojaSprite hoja){
@@ -35,7 +36,14 @@ public class Sprite {
             }
             
         }
-        
+   
+    }
+    private Sprite(final int lado,final int color) {
+        this.LADO=lado;
+        pixeles= new int[lado*lado];
+        for (int i = 0; i < pixeles.length; i++) {
+            pixeles[i]=color;
+        }
         
     }
 
