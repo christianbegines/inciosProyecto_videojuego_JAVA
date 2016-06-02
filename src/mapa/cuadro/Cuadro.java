@@ -22,7 +22,7 @@ public abstract class Cuadro {
     
     
     
-    
+   public static final int lado=32; 
    public int x;
    public Sprite sprite;
    

@@ -29,11 +29,18 @@ import mapa.MapaGenerado;
 public class Stormrage extends Canvas implements Runnable{
     //atributos de la clase
     public static final long SERIALVERSIONUID=1L; 
+   
     //Ancho y alto de la ventana
     private static final int ANCHO=800;
     private static final int ALTO=600;
+   
     //Nombre de la ventana
     private static final String NOMBRE="Stormrage";
+    
+    private static String contador_APS="";
+    private static String contador_FPS="";
+   
+    
     private static int aps=0;
     private static int fps=0;   
     private static volatile boolean enFuncionamiento=false;
@@ -70,10 +77,11 @@ public class Stormrage extends Canvas implements Runnable{
         ventanaP.setResizable(false);
         ventanaP.setLayout(new BorderLayout());
         ventanaP.add(this,BorderLayout.CENTER);
-        ventanaP.pack();
+        
+        ventanaP.setUndecorated(true);
         ventanaP.setLocationRelativeTo(null);
         ventanaP.setVisible(true);
-       
+        ventanaP.pack();
     }
     /**
      * Realiza lo contenido cuanddo el thread
@@ -130,8 +138,8 @@ public class Stormrage extends Canvas implements Runnable{
         thread.start();
     }
     /**
-     * Actualiza los valores de las teclas y 
-     * los parametros x e y
+     *Da valor y funcionalidad al pulsar las teclas
+     * 
      */
     private void actualizar(){
         teclado.actualizar();   
@@ -146,7 +154,10 @@ public class Stormrage extends Canvas implements Runnable{
         }
         if(teclado.derecha){
            x++;
-        }       
+        }    
+        if(teclado.salir){
+            System.exit(0);
+        }
         aps++;
     }
     
@@ -169,6 +180,7 @@ public class Stormrage extends Canvas implements Runnable{
         g.drawImage(imagen, 0, 0, getWidth(),getHeight(),null);
         g.setColor(Color.white);
         g.fillRect(ANCHO/2, ALTO/2, 32, 32);
+        g.drawString(contador_APS, 10, 20);
         g.dispose();
         estrategia.show();
         fps++;

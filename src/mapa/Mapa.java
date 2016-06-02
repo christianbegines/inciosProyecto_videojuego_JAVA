@@ -43,9 +43,9 @@ public abstract class Mapa {
         pantalla.establecerDiferencia(compensacionX, compensacionY);
         
         int oeste=compensacionX >> 5;
-        int este=(compensacionX+pantalla.getANCHO()) >> 5;
+        int este=(compensacionX+pantalla.getANCHO()+Cuadro.lado) >> 5;
         int norte=compensacionY >> 5;
-        int sud=(compensacionY+pantalla.getALTO()) >> 5;
+        int sud=(compensacionY+pantalla.getALTO()+Cuadro.lado) >> 5;
         for (int y = 0; y < sud; y++) {
             for (int x = 0; x < este; x++) {
                 obtenerCuadro(x,y).mostrar(x, y, pantalla);
@@ -63,6 +63,7 @@ public abstract class Mapa {
      */
     public Cuadro obtenerCuadro(int x, int y){
        Cuadro cuadro=Cuadro.vacio;
+       
        if(x<0 || y<0 || x>=ancho || y>=alto){
            cuadro=Cuadro.vacio;
        }

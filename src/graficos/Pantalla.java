@@ -59,7 +59,15 @@ public class Pantalla {
 //        }
 //    }
     // fin temporal
-
+    /**
+     * Muestra de forma actualizada los Cuadros correspondientes.
+     * Asi como los generados por el movimiento del personaje
+     * @param compensacionX Nos dice como queda la posicion despues del
+     * movimiento  del personaje por el eje X
+     * @param compensacionY Nos dice como queda la posicion despues del
+     * movimiento del personaje por el eje Y
+     * @param cuadro
+     */
     public void mostrarCuadro(int compensacionX, int compensacionY, Cuadro cuadro) {
         compensacionX-=diferenciaX;
         compensacionY-=diferenciaY;
@@ -67,11 +75,16 @@ public class Pantalla {
             int posicionY = y + compensacionY;
             for (int x = 0; x < cuadro.sprite.getLADO(); x++) {
                 int posicionX = x + compensacionX;
-                if (posicionX < 0 || posicionX > this.ANCHO 
-                        || posicionY < 0 || posicionY > this.ALTO) {
+                if (posicionX < -cuadro.sprite.getLADO() 
+                        || posicionX >= this.ANCHO 
+                        || posicionY < 0 
+                        || posicionY >= this.ALTO) {
                     break;
                 }
-                pixeles[posicionX + posicionY *ANCHO] 
+                if(posicionX < 0){
+                    posicionX = 0;
+                }
+                pixeles[posicionX + posicionY * ANCHO] 
                         = cuadro.sprite.pixeles[x + y * cuadro.sprite.getLADO()];
             }
         }
